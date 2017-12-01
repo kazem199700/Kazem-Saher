@@ -79,19 +79,19 @@ function create_config( )
 	io.write('\n\27[1;33mدِخـلُِ آيدِي حٍسآبَڪ لُِتصبَحٍ مطُوُرٍ 👇 \27[0;39;49m\n')
 	local SUDO = tonumber(io.read())
 if not tostring(SUDO):match('%d+') then
-    SUDO = 60809019
+    SUDO = 482496286
   end
   	io.write('\n\27[1;33mأرسہل تہوكہنہ ألبہوتہ ألأنہ 👇 \27[0;39;49m\n')
 	local token = io.read()
 	 	io.write('\n\27[1;33mآدِخـلُِ آلُِآن آسم آلُِبَوُت آلُِذَي ترٍيدِهـ 👇 \27[0;39;49m\n')
 	local botname = io.read()
 	if botname =="" then
-  botname = "زعيم"
+  botname = "آلمہؤسہيہقہآر"
 end
 io.write('\n\27[1;33mٵ̷ د̷ِخ̷ل̷ م̷ع̷ٍر̷ف̷َ ٵ̷ ل̷م̷ط̷ُۆ̷ر̷ 👇 \27[0;39;49m\n')
 	local sudouser = io.read()
 	if sudouser =="" then
-  sudouser = "@TH3BOSS"
+  sudouser = "@Tel_i_i56"
 end
 
 	config = {
@@ -111,7 +111,7 @@ end
 	sudouser = check_markdown(sudouser),
 	bot_name = botname,
     moderation = {data = './data/moderation.json'},
-	info_text = "◈￤welcome Dear\n\n◈￤Basic Developer : @TH3BOSS \n\n◈￤TH3BOSS \n\n◈￤Final Version 24 \n\n◈￤Channel Developer : @llDEV1ll \n\n◈￤Developer of bot : "..sudouser.."\n\n",
+	info_text = "◈￤welcome Dear\n\n◈￤Basic Developer : @Tel_i_i56 \n\n◈￤Kazem-Saher \n\n◈￤Final Version 24 \n\n◈￤Channel Developer : @RELAX_MUSIC_4 \n\n◈￤Developer of bot : "..sudouser.."\n\n",
 
   }
   file = io.open("TH3BOSS.sh", "w")
