@@ -60,10 +60,10 @@ else
 user_name = check_markdown(data.first_name_)
 end
      if data.id_ == our_id then
-  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ لا تستطيع حظر المدراء او الادمنيه*", 0, "md")
+  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ ل̷ٵ̷  ت̷س̷ت̷ط̷ُي̷ع̷ٍ ح̷ظ̷ًر̷ ٵ̷ ل̷م̷د̷ِر̷ٵ̷ ء ٵ̷ ۆ̷ ٵ̷ ل̷ٵ̷ د̷ِم̷ن̷ي̷ہ̷*", 0, "md")
      end
    if is_mod1(arg.chat_id, data.id_) then
-  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ لا تستطيع حظر المدراء او الادمنيه*", 0, "md")
+  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ ل̷ٵ̷  ت̷س̷ت̷ط̷ُي̷ع̷ٍ ح̷ظ̷ًر̷ ٵ̷ ل̷م̷د̷ِر̷ٵ̷ ء ٵ̷ ۆ̷ ٵ̷ ل̷ٵ̷ د̷ِم̷ن̷ي̷ہ̷*", 0, "md")
      end
 if administration[tostring(arg.chat_id)]['banned'][tostring(data.id_)] then
      return tdcli.sendMessage(arg.chat_id, "", 0, '◈￤ _العضو ⇠_ ['..user_name..'] \n◈￤ _الايدي ⇠_* ['..data.id_..']*\n◈￤ _ تم بالتأكيد حظره ☑️_', 0, "md")
@@ -110,10 +110,10 @@ else
 user_name = check_markdown(data.first_name_)
 end
      if data.id_ == our_id then
-  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ لا تستطيع كتم المدراء او الادمنيه*", 0, "md")
+  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ أ تہسہتہطہيہعہ كہتہمہ ألمہدرأء أو ألأدمہنہيہه*", 0, "md")
      end
    if is_mod1(arg.chat_id, data.id_) then
-  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ لا تستطيع كتم المدراء او الادمنيه*", 0, "md")
+  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ أ تہسہتہطہيہعہ كہتہمہ ألمہدرأء أو ألأدمہنہيہه*", 0, "md")
      end
 if administration[tostring(arg.chat_id)]['is_silent_users'][tostring(data.id_)] then
      return tdcli.sendMessage(arg.chat_id, "", 0, '◈￤ _العضو ⇠_ ['..user_name..'] \n◈￤ _الايدي ⇠_* ['..data.id_..']*\n◈￤ _ تم بالتأكيد كتمه ☑️_', 0, "md")
@@ -161,10 +161,10 @@ end
     save_data(_config.moderation.data, administration)
     end
      if data.id_ == our_id then
-  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ لا تستطيع حظر المدراء او الادمنيه*", 0, "md")
+  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ آ تـٌـٌٌـڛـ,ـتـٌـٌٌـطُـٌـٌٌـٌيعٌـِـِِـِـ حـًـًًـًًًـًًـًـظًر آلُـِـِِـِِِـِِـِـمـْـْْـْڊرآء آوُ آلُـِـِِـِِِـِِـِـآڊمـْـْْـْنـِِـِـيﮩ*", 0, "md")
      end
    if is_sudo1(data.id_) then
-  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ لا تستطيع حظر المدراء او الادمنيه*", 0, "md")
+  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ آ تـٌـٌٌـڛـ,ـتـٌـٌٌـطُـٌـٌٌـٌيعٌـِـِِـِـ حـًـًًـًًًـًًـًـظًر آلُـِـِِـِِِـِِـِـمـْـْْـْڊرآء آوُ آلُـِـِِـِِِـِِـِـآڊمـْـْْـْنـِِـِـيﮩ*", 0, "md")
      end
 if is_gbanned(data.id_) then
      return tdcli.sendMessage(arg.chat_id, "", 0, '◈￤ _العضو ⇠_ ['..user_name..'] \n◈￤ _الايدي ⇠_* ['..data.id_..']*\n◈￤ _  تم بالتأكيد حظره عام ☑️_', 0, "md")
@@ -206,22 +206,22 @@ tdcli_function ({
   if cmd == "kick" then
 
      if data.sender_user_id_ == our_id then
-  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤  لا تستطيع طرد المدراء او الادمنيه*", 0, "md")
+  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤  ٵ̷  ت̷س̷ت̷ط̷ُي̷ع̷ٍ ط̷ُر̷د̷ِ ٵ̷ ل̷م̷د̷ِر̷ٵ̷ ء ٵ̷ ۆ̷ ٵ̷ ل̷ٵ̷ د̷ِم̷ن̷ي̷ہ̷*", 0, "md")
    elseif is_mod1(data.chat_id_, data.sender_user_id_) then
-  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤  لا تستطيع طرد المدراء او الادمنيه*", 0, "md")
+  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤  ٵ̷  ت̷س̷ت̷ط̷ُي̷ع̷ٍ ط̷ُر̷د̷ِ ٵ̷ ل̷م̷د̷ِر̷ٵ̷ ء ٵ̷ ۆ̷ ٵ̷ ل̷ٵ̷ د̷ِم̷ن̷ي̷ہ̷*", 0, "md")
   else
 
      kick_user(data.sender_user_id_, data.chat_id_)
     sleep(1)
 	channel_unblock(data.chat_id_, data.sender_user_id_)
-tdcli.sendMessage(data.chat_id_,  arg.msg_id, 0, "◈￤ مرحبا عزيزي \n◈￤ تم طرد العضو ⇠ ","md")
+tdcli.sendMessage(data.chat_id_,  arg.msg_id, 0, "◈￤ م͠رح͠ب͠آ͠ ع͠ز͠ي͠ز͠ي͠ \n◈￤ ت̲م̲ ط̲ر̲د̲ آ̲ل̲ع̲ضۆ̲ ⇠ ","md")
 
 end
 
 end
     
 else
-  return tdcli.sendMessage(data.chat_id_, "", 0, "*لم يتم العثور على العضو ⇠*", 0, "md")
+  return tdcli.sendMessage(data.chat_id_, "", 0, "*لُم يَتم آلُعٍثۆرٍ عٍلُﮯ آلُعٍضۆ ⇠*", 0, "md")
    end
 end
 local function action_by_username(arg, data)
@@ -236,10 +236,10 @@ user_name = check_markdown(data.title_)
 end
   if cmd == "ban" then
      if data.id_ == our_id then
-  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ لا تستطيع حظر المدراء او الادمنيه*", 0, "md")
+  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ آ تـٌـٌٌـڛـ,ـتـٌـٌٌـطُـٌـٌٌـٌيعٌـِـِِـِـ حـًـًًـًًًـًًـًـظًر آلُـِـِِـِِِـِِـِـمـْـْْـْڊرآء آوُ آلُـِـِِـِِِـِِـِـآڊمـْـْْـْنـِِـِـيﮩ*", 0, "md")
      end
    if is_mod1(arg.chat_id, data.id_) then
-  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ لا تستطيع حظر المدراء او الادمنيه*", 0, "md")
+  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ آ تـٌـٌٌـڛـ,ـتـٌـٌٌـطُـٌـٌٌـٌيعٌـِـِِـِـ حـًـًًـًًًـًًـًـظًر آلُـِـِِـِِِـِِـِـمـْـْْـْڊرآء آوُ آلُـِـِِـِِِـِِـِـآڊمـْـْْـْنـِِـِـيﮩ*", 0, "md")
      end
 if administration[tostring(arg.chat_id)]['banned'][tostring(data.id_)] then
      return  tdcli.sendMessage(arg.chat_id, "", 0, '◈￤ _العضو ⇠_ ['..user_name..'] \n◈￤ _الايدي ⇠_ *['..data.id_..']*\n◈￤ _ تم بالتأكيد حظره ☑️_', 0, "md")
@@ -262,10 +262,10 @@ channel_unblock(arg.chat_id, data.id_)
 end
   if cmd == "silent" then
      if data.id_ == our_id then
-  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ لا تستطيع كتم المدراء او الادمنيه*", 0, "md")
+  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ آ͠ ت͠س͠ت͠ط͠ي͠ع͠ گ͠ت͠م͠ آ͠ل͠م͠د͠رآ͠ء آ͠و͠ آ͠ل͠آ͠د͠م͠ن͠ي͠ه͠*", 0, "md")
      end
    if is_mod1(arg.chat_id, data.id_) then
-  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ لا تستطيع كتم المدراء او الادمنيه*", 0, "md")
+  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ آ͠ ت͠س͠ت͠ط͠ي͠ع͠ گ͠ت͠م͠ آ͠ل͠م͠د͠رآ͠ء آ͠و͠ آ͠ل͠آ͠د͠م͠ن͠ي͠ه͠*", 0, "md")
      end
 if administration[tostring(arg.chat_id)]['is_silent_users'][tostring(data.id_)] then
      return tdcli.sendMessage(arg.chat_id, "", 0, '◈￤ _العضو ⇠_ ['..user_name..'] \n◈￤ _الايدي ⇠_ *['..data.id_..']*\n◈￤ _ تم بالتأكيد كتمه ☑️_', 0, "md")
@@ -288,10 +288,10 @@ end
     save_data(_config.moderation.data, administration)
     end
      if data.id_ == our_id then
-  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ لا تستطيع حظر المدراء او الادمنيه*", 0, "md")
+  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ إآ تـ,سًٌُُتـ,طُيَ۶ وظًرٍ إآلُمـﮃرٍإآء إآۈ إآلُإآﮃمـنيَه̷̸̐*", 0, "md")
      end
    if is_sudo1(data.id_) then
-  return tdcli.sendMessage(arg.chat_id, "", 0, "*📌 لا تستطيع حظر المدراء او الادمنيه*", 0, "md")
+  return tdcli.sendMessage(arg.chat_id, "", 0, "*📌 إآ تـ,سًٌُُتـ,طُيَ۶ وظًرٍ إآلُمـﮃرٍإآء إآۈ إآلُإآﮃمـنيَه̷̸̐*", 0, "md")
      end
 if is_gbanned(data.id_) then
      return tdcli.sendMessage(arg.chat_id, "", 0, '◈￤ _العضو ⇠_ ['..user_name..'] \n◈￤ _الايدي ⇠_ *['..data.id_..']*\n◈￤ _ تم بالتأكيد حظره عام ☑️_', 0, "md")
@@ -315,19 +315,19 @@ if not is_gbanned(data.id_) then
 end
   if cmd == "kick" then
      if data.id_ == our_id then
-  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ لا تستطيع طرد المدراء او الادمنيه*", 0, "md")
+  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ آ̯͡ ت̯͡س̯͡ت̯͡ط̯͡ي̯͡ع̯͡ ط̯͡ر̯͡د̯͡ آ̯͡ل̯͡م̯͡د̯͡ر̯͡آ̯͡ء آ̯͡ۆ̯͡ آ̯͡ل̯͡آ̯͡د̯͡م̯͡ن̯͡ي̯͡ہ̯͡*", 0, "md")
    elseif is_mod1(arg.chat_id, data.id_) then
-  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ لا تستطيع طرد المدراء او الادمنيه*", 0, "md")
+  return tdcli.sendMessage(arg.chat_id, "", 0, "*◈￤ آ̯͡ ت̯͡س̯͡ت̯͡ط̯͡ي̯͡ع̯͡ ط̯͡ر̯͡د̯͡ آ̯͡ل̯͡م̯͡د̯͡ر̯͡آ̯͡ء آ̯͡ۆ̯͡ آ̯͡ل̯͡آ̯͡د̯͡م̯͡ن̯͡ي̯͡ہ̯͡*", 0, "md")
   else
 kick_user(data.id_, arg.chat_id)
   sleep(1)
 channel_unblock(arg.chat_id, data.id_)
-tdcli.sendMessage(arg.chat_id, arg.msg_id, 0, "◈￤ مرحبا عزيزي \n◈￤ تم طرد العضو ⇠ "..check_markdown(user_name).."","md")
+tdcli.sendMessage(arg.chat_id, arg.msg_id, 0, "◈￤ مرٍحٍبَآ عٍزْيزْي \n◈￤ تہمہ طہرد ألعہضو ⇠ "..check_markdown(user_name).."","md")
 end
 end
 
 else
-  return tdcli.sendMessage(arg.chat_id, "", 0, "_لم يتم العثور على العضو ⇠_", 0, "md")
+  return tdcli.sendMessage(arg.chat_id, "", 0, "_لمہ يہتہمہ ألعہثہور عہلى ألعہضو ⇠_", 0, "md")
    end
 end
 local function moody(msg, matches)
@@ -346,9 +346,9 @@ if not matches[2] and msg.reply_id then
 end
   if matches[2] and string.match(matches[2], '^%d+$') then
     if userid == our_id then
-     tdcli.sendMessage(msg.chat_id_, "", 0, "*◈￤ لا تستطيع طرد المدراء اوالادمنيه*", 0, "md")
+     tdcli.sendMessage(msg.chat_id_, "", 0, "*◈￤ ا تہٰسہٰتہٰطہٰيٰع طہٰرد الہٰمدراء اوالہٰادمنيٰه*", 0, "md")
    elseif is_mod1(msg.to.id, userid) then
-     tdcli.sendMessage(msg.chat_id_, "", 0, "*◈￤ لا تستطيع طرد المدراء اوالادمنيه*", 0, "md")
+     tdcli.sendMessage(msg.chat_id_, "", 0, "*◈￤ ا تہٰسہٰتہٰطہٰيٰع طہٰرد الہٰمدراء اوالہٰادمنيٰه*", 0, "md")
      else
 kick_user(matches[2], msg.to.id)
    sleep(1)
