@@ -1,442 +1,438 @@
--- BY MOHAMMED HISHAM
--- BY @Tel_i_i56
--- BY @kazzrr
-tdcli = dofile('./tg/tdcli.lua')
-serpent = (loadfile "./libs/serpent.lua")()
-feedparser = (loadfile "./libs/feedparser.lua")()
-require('./bot/utils')
-require('./libs/lua-redis')
-URL = require "socket.url"
-http = require "socket.http"
-https = require "ssl.https"
-ltn12 = require "ltn12"
-json = (loadfile "./libs/JSON.lua")()
-mimetype = (loadfile "./libs/mimetype.lua")()
-redis = (loadfile "./libs/redis.lua")()
-JSON = (loadfile "./libs/dkjson.lua")()
-local lgi = require ('lgi')
-local notify = lgi.require('Notify')
-notify.init ("Telegram updates")
-chats = {}
-plugins = {}
+-- ɮʏ ʍօɦǟʍʍɛɖ ɦɨֆɦǟʍ
+-- ɮʏ @ȶɛʟ_ɨ_ɨ56
+-- ɮʏ @ӄǟʐʐʀʀ
+ȶɖƈʟɨ = ɖօʄɨʟɛ('./ȶɢ/ȶɖƈʟɨ.ʟʊǟ')
+ֆɛʀքɛռȶ = (ʟօǟɖʄɨʟɛ "./ʟɨɮֆ/ֆɛʀքɛռȶ.ʟʊǟ")()
+ʄɛɛɖքǟʀֆɛʀ = (ʟօǟɖʄɨʟɛ "./ʟɨɮֆ/ʄɛɛɖքǟʀֆɛʀ.ʟʊǟ")()
+ʀɛզʊɨʀɛ('./ɮօȶ/ʊȶɨʟֆ')
+ʀɛզʊɨʀɛ('./ʟɨɮֆ/ʟʊǟ-ʀɛɖɨֆ')
+ʊʀʟ = ʀɛզʊɨʀɛ "ֆօƈӄɛȶ.ʊʀʟ"
+ɦȶȶք = ʀɛզʊɨʀɛ "ֆօƈӄɛȶ.ɦȶȶք"
+ɦȶȶքֆ = ʀɛզʊɨʀɛ "ֆֆʟ.ɦȶȶքֆ"
+ʟȶռ12 = ʀɛզʊɨʀɛ "ʟȶռ12"
+ʝֆօռ = (ʟօǟɖʄɨʟɛ "./ʟɨɮֆ/ʝֆօռ.ʟʊǟ")()
+ʍɨʍɛȶʏքɛ = (ʟօǟɖʄɨʟɛ "./ʟɨɮֆ/ʍɨʍɛȶʏքɛ.ʟʊǟ")()
+ʀɛɖɨֆ = (ʟօǟɖʄɨʟɛ "./ʟɨɮֆ/ʀɛɖɨֆ.ʟʊǟ")()
+ʝֆօռ = (ʟօǟɖʄɨʟɛ "./ʟɨɮֆ/ɖӄʝֆօռ.ʟʊǟ")()
+ʟօƈǟʟ ʟɢɨ = ʀɛզʊɨʀɛ ('ʟɢɨ')
+ʟօƈǟʟ ռօȶɨʄʏ = ʟɢɨ.ʀɛզʊɨʀɛ('ռօȶɨʄʏ')
+ռօȶɨʄʏ.ɨռɨȶ ("ȶɛʟɛɢʀǟʍ ʊքɖǟȶɛֆ")
+ƈɦǟȶֆ = {}
+քʟʊɢɨռֆ = {}
 
-function do_notify (user, msg)
-	local n = notify.Notification.new(user, msg)
-	n:show ()
-end
+ʄʊռƈȶɨօռ ɖօ_ռօȶɨʄʏ (ʊֆɛʀ, ʍֆɢ)
+	ʟօƈǟʟ ռ = ռօȶɨʄʏ.ռօȶɨʄɨƈǟȶɨօռ.ռɛա(ʊֆɛʀ, ʍֆɢ)
+	ռ:ֆɦօա ()
+ɛռɖ
 
-function dl_cb (arg, data)
-	-- vardump(data)
-end
+ʄʊռƈȶɨօռ ɖʟ_ƈɮ (ǟʀɢ, ɖǟȶǟ)
+	-- ʋǟʀɖʊʍք(ɖǟȶǟ)
+ɛռɖ
 
-function vardump(value)
-	print(serpent.block(value, {comment=false}))
-end
+ʄʊռƈȶɨօռ ʋǟʀɖʊʍք(ʋǟʟʊɛ)
+	քʀɨռȶ(ֆɛʀքɛռȶ.ɮʟօƈӄ(ʋǟʟʊɛ, {ƈօʍʍɛռȶ=ʄǟʟֆɛ}))
+ɛռɖ
 
-function load_data(filename)
-	local f = io.open(filename)
-	if not f then
-		return {}
-	end
-	local s = f:read('*all')
-	f:close()
-	local data = JSON.decode(s)
-	return data
-end
+ʄʊռƈȶɨօռ ʟօǟɖ_ɖǟȶǟ(ʄɨʟɛռǟʍɛ)
+	ʟօƈǟʟ ʄ = ɨօ.օքɛռ(ʄɨʟɛռǟʍɛ)
+	ɨʄ ռօȶ ʄ ȶɦɛռ
+		ʀɛȶʊʀռ {}
+	ɛռɖ
+	ʟօƈǟʟ ֆ = ʄ:ʀɛǟɖ('*ǟʟʟ')
+	ʄ:ƈʟօֆɛ()
+	ʟօƈǟʟ ɖǟȶǟ = ʝֆօռ.ɖɛƈօɖɛ(ֆ)
+	ʀɛȶʊʀռ ɖǟȶǟ
+ɛռɖ
 
-function save_data(filename, data)
-	local s = JSON.encode(data)
-	local f = io.open(filename, 'w')
-	f:write(s)
-	f:close()
-end
+ʄʊռƈȶɨօռ ֆǟʋɛ_ɖǟȶǟ(ʄɨʟɛռǟʍɛ, ɖǟȶǟ)
+	ʟօƈǟʟ ֆ = ʝֆօռ.ɛռƈօɖɛ(ɖǟȶǟ)
+	ʟօƈǟʟ ʄ = ɨօ.օքɛռ(ʄɨʟɛռǟʍɛ, 'ա')
+	ʄ:աʀɨȶɛ(ֆ)
+	ʄ:ƈʟօֆɛ()
+ɛռɖ
 
-function whoami()
-	local usr = io.popen("whoami"):read('*a')
-	usr = string.gsub(usr, '^%s+', '')
-	usr = string.gsub(usr, '%s+$', '')
-	usr = string.gsub(usr, '[\n\r]+', ' ') 
-	if usr:match("^root$") then
-		tcpath = '/root/.telegram-cli'
-	elseif not usr:match("^root$") then
-		tcpath = '/home/'..usr..'/.telegram-cli'
-	end
-  print('>> Download Path = '..tcpath)
-end
+ʄʊռƈȶɨօռ աɦօǟʍɨ()
+	ʟօƈǟʟ ʊֆʀ = ɨօ.քօքɛռ("աɦօǟʍɨ"):ʀɛǟɖ('*ǟ')
+	ʊֆʀ = ֆȶʀɨռɢ.ɢֆʊɮ(ʊֆʀ, '^%ֆ+', '')
+	ʊֆʀ = ֆȶʀɨռɢ.ɢֆʊɮ(ʊֆʀ, '%ֆ+$', '')
+	ʊֆʀ = ֆȶʀɨռɢ.ɢֆʊɮ(ʊֆʀ, '[\ռ\ʀ]+', ' ') 
+	ɨʄ ʊֆʀ:ʍǟȶƈɦ("^ʀօօȶ$") ȶɦɛռ
+		ȶƈքǟȶɦ = '/ʀօօȶ/.ȶɛʟɛɢʀǟʍ-ƈʟɨ'
+	ɛʟֆɛɨʄ ռօȶ ʊֆʀ:ʍǟȶƈɦ("^ʀօօȶ$") ȶɦɛռ
+		ȶƈքǟȶɦ = '/ɦօʍɛ/'..ʊֆʀ..'/.ȶɛʟɛɢʀǟʍ-ƈʟɨ'
+	ɛռɖ
+  քʀɨռȶ('>> ɖօառʟօǟɖ քǟȶɦ = '..ȶƈքǟȶɦ)
+ɛռɖ
 
-function match_plugins(msg)
-	for name, plugin in pairs(plugins) do
-		match_plugin(plugin, name, msg)
-	end
-end
+ʄʊռƈȶɨօռ ʍǟȶƈɦ_քʟʊɢɨռֆ(ʍֆɢ)
+	ʄօʀ ռǟʍɛ, քʟʊɢɨռ ɨռ քǟɨʀֆ(քʟʊɢɨռֆ) ɖօ
+		ʍǟȶƈɦ_քʟʊɢɨռ(քʟʊɢɨռ, ռǟʍɛ, ʍֆɢ)
+	ɛռɖ
+ɛռɖ
 
-function save_config( )
-	serialize_to_file(_config, './data/config.lua')
-	print ('saved config into ./data/config.lua')
-end
+ʄʊռƈȶɨօռ ֆǟʋɛ_ƈօռʄɨɢ( )
+	ֆɛʀɨǟʟɨʐɛ_ȶօ_ʄɨʟɛ(_ƈօռʄɨɢ, './ɖǟȶǟ/ƈօռʄɨɢ.ʟʊǟ')
+	քʀɨռȶ ('ֆǟʋɛɖ ƈօռʄɨɢ ɨռȶօ ./ɖǟȶǟ/ƈօռʄɨɢ.ʟʊǟ')
+ɛռɖ
 
-function create_config( )
-	io.write('\n\27[1;33mدِخـلُِ آيدِي حٍسآبَڪ لُِتصبَحٍ مطُوُرٍ 👇 \27[0;39;49m\n')
-	local SUDO = tonumber(io.read())
-if not tostring(SUDO):match('%d+') then
-    SUDO = 482496286
-  end
-  	io.write('\n\27[1;33mأرسہل تہوكہنہ ألبہوتہ ألأنہ 👇 \27[0;39;49m\n')
-	local token = io.read()
-	 	io.write('\n\27[1;33mآدِخـلُِ آلُِآن آسم آلُِبَوُت آلُِذَي ترٍيدِهـ 👇 \27[0;39;49m\n')
-	local botname = io.read()
-	if botname =="" then
-  botname = "آلمہؤسہيہقہآر"
-end
-io.write('\n\27[1;33mٵ̷ د̷ِخ̷ل̷ م̷ع̷ٍر̷ف̷َ ٵ̷ ل̷م̷ط̷ُۆ̷ر̷ 👇 \27[0;39;49m\n')
-	local sudouser = io.read()
-	if sudouser =="" then
-  sudouser = "@Tel_i_i56"
-end
+ʄʊռƈȶɨօռ ƈʀɛǟȶɛ_ƈօռʄɨɢ( )
+	ɨօ.աʀɨȶɛ('\ռ\27[1;ЗЗʍدِخـلُِ آيدِي حٍسآبَڪ لُِتصبَحٍ مطُوُرٍ 👇 \27[0;З9;49ʍ\ռ')
+	ʟօƈǟʟ ֆʊɖօ = ȶօռʊʍɮɛʀ(ɨօ.ʀɛǟɖ())
+ɨʄ ռօȶ ȶօֆȶʀɨռɢ(ֆʊɖօ):ʍǟȶƈɦ('%ɖ+') ȶɦɛռ
+    ֆʊɖօ = 482496286
+  ɛռɖ
+  	ɨօ.աʀɨȶɛ('\ռ\27[1;ЗЗʍأرسہل تہوكہنہ ألبہوتہ ألأنہ 👇 \27[0;З9;49ʍ\ռ')
+	ʟօƈǟʟ ȶօӄɛռ = ɨօ.ʀɛǟɖ()
+	 	ɨօ.աʀɨȶɛ('\ռ\27[1;ЗЗʍآدِخـلُِ آلُِآن آسم آلُِبَوُت آلُِذَي ترٍيدِهـ 👇 \27[0;З9;49ʍ\ռ')
+	ʟօƈǟʟ ɮօȶռǟʍɛ = ɨօ.ʀɛǟɖ()
+	ɨʄ ɮօȶռǟʍɛ =="" ȶɦɛռ
+  ɮօȶռǟʍɛ = "آلمہؤسہيہقہآر"
+ɛռɖ
+ɨօ.աʀɨȶɛ('\ռ\27[1;ЗЗʍٵ̷ د̷ِخ̷ل̷ م̷ع̷ٍر̷ف̷َ ٵ̷ ل̷م̷ط̷ُۆ̷ر̷ 👇 \27[0;З9;49ʍ\ռ')
+	ʟօƈǟʟ ֆʊɖօʊֆɛʀ = ɨօ.ʀɛǟɖ()
+	ɨʄ ֆʊɖօʊֆɛʀ =="" ȶɦɛռ
+  ֆʊɖօʊֆɛʀ = "@ȶɛʟ_ɨ_ɨ56"
+ɛռɖ
 
-	config = {
-    enabled_plugins = {
-	"banhammer",
-    "groupmanager",
-    "msg-checks",
-    "plugins",
-    "tools",
-	"replay",
-	"zhrf",
-	"dell",
+	ƈօռʄɨɢ = {
+    ɛռǟɮʟɛɖ_քʟʊɢɨռֆ = {
+	"ɮǟռɦǟʍʍɛʀ",
+    "ɢʀօʊքʍǟռǟɢɛʀ",
+    "ʍֆɢ-ƈɦɛƈӄֆ",
+    "քʟʊɢɨռֆ",
+    "ȶօօʟֆ",
+	"ʀɛքʟǟʏ",
+	"ʐɦʀʄ",
+	"ɖɛʟʟ",
 
 	},
-    sudo_users = {{SUDO,check_markdown(sudouser)}},
-	SUDO = SUDO,
-	sudouser = check_markdown(sudouser),
-	bot_name = botname,
-    moderation = {data = './data/moderation.json'},
-	info_text = "◈￤welcome Dear\n\n◈￤Basic Developer : @Tel_i_i56 \n\n◈￤Kazem-Saher \n\n◈￤Final Version 24 \n\n◈￤Channel Developer : @RELAX_MUSIC_4 \n\n◈￤Developer of bot : "..sudouser.."\n\n",
+    ֆʊɖօ_ʊֆɛʀֆ = {{ֆʊɖօ,ƈɦɛƈӄ_ʍǟʀӄɖօառ(ֆʊɖօʊֆɛʀ)}},
+	ֆʊɖօ = ֆʊɖօ,
+	ֆʊɖօʊֆɛʀ = ƈɦɛƈӄ_ʍǟʀӄɖօառ(ֆʊɖօʊֆɛʀ),
+	ɮօȶ_ռǟʍɛ = ɮօȶռǟʍɛ,
+    ʍօɖɛʀǟȶɨօռ = {ɖǟȶǟ = './ɖǟȶǟ/ʍօɖɛʀǟȶɨօռ.ʝֆօռ'},
+	ɨռʄօ_ȶɛӼȶ = "◈￤աɛʟƈօʍɛ ɖɛǟʀ\ռ\ռ◈￤ɮǟֆɨƈ ɖɛʋɛʟօքɛʀ : @ȶɛʟ_ɨ_ɨ56 \ռ\ռ◈￤ӄǟʐɛʍ-ֆǟɦɛʀ \ռ\ռ◈￤ʄɨռǟʟ ʋɛʀֆɨօռ 24 \ռ\ռ◈￤ƈɦǟռռɛʟ ɖɛʋɛʟօքɛʀ : @ʀɛʟǟӼ_ʍʊֆɨƈ_4 \ռ\ռ◈￤ɖɛʋɛʟօքɛʀ օʄ ɮօȶ : "..ֆʊɖօʊֆɛʀ.."\ռ\ռ",
 
   }
-  file = io.open("TH3BOSS.sh", "w")
-file:write([[
-token="]]..token..[["
-if [ ! -f ./tg/tgcli ]; then
-    echo "tg not found"
-    echo "Run $0 install"
-    exit 1
-fi
-if [ $token == "" ]; then
-    echo "token not found"
-    echo "Run install again"
-    exit 1
-fi
+  ʄɨʟɛ = ɨօ.օքɛռ("ȶɦЗɮօֆֆ.ֆɦ", "ա")
+ʄɨʟɛ:աʀɨȶɛ([[
+ȶօӄɛռ="]]..ȶօӄɛռ..[["
+ɨʄ [ ! -ʄ ./ȶɢ/ȶɢƈʟɨ ]; ȶɦɛռ
+    ɛƈɦօ "ȶɢ ռօȶ ʄօʊռɖ"
+    ɛƈɦօ "ʀʊռ $0 ɨռֆȶǟʟʟ"
+    ɛӼɨȶ 1
+ʄɨ
+ɨʄ [ $ȶօӄɛռ == "" ]; ȶɦɛռ
+    ɛƈɦօ "ȶօӄɛռ ռօȶ ʄօʊռɖ"
+    ɛƈɦօ "ʀʊռ ɨռֆȶǟʟʟ ǟɢǟɨռ"
+    ɛӼɨȶ 1
+ʄɨ
  
-COUNTER=1
-while(true) do
-
-curl "https://api.telegram.org/bot"$token"/sendmessage" -F
-./tg/tgcli -s ./bot/bot.lua $@ --bot=$token
-
-let COUNTER=COUNTER+1 
-done
-
-
+ƈօʊռȶɛʀ=1
+աɦɨʟɛ(ȶʀʊɛ) ɖօ
+ƈʊʀʟ "ɦȶȶքֆ://ǟքɨ.ȶɛʟɛɢʀǟʍ.օʀɢ/ɮօȶ"$ȶօӄɛռ"/ֆɛռɖʍɛֆֆǟɢɛ" -ʄ
+./ȶɢ/ȶɢƈʟɨ -ֆ ./ɮօȶ/ɮօȶ.ʟʊǟ $@ --ɮօȶ=$ȶօӄɛռ
+ʟɛȶ ƈօʊռȶɛʀ=ƈօʊռȶɛʀ+1 
+ɖօռɛ
 ]])
-file:close()
+ʄɨʟɛ:ƈʟօֆɛ()
 
-	serialize_to_file(config, './data/config.lua')
-	print ('saved config into config.lua')
-	if token=="" then
-print("◈￤ لم تقم بوضع التوكن يجب عليك وضع التوكن في ملف البوت ليعمل السورس\n")
-os.execute(' rm -fr data/config.lua && rm -fr ./launch.sh ')
-print ('\n\n\n you did not Enter token \n i delete file launch and config.lua \n\n\n now Run file instal.sh\n ')
-return
-end
-end
+	ֆɛʀɨǟʟɨʐɛ_ȶօ_ʄɨʟɛ(ƈօռʄɨɢ, './ɖǟȶǟ/ƈօռʄɨɢ.ʟʊǟ')
+	քʀɨռȶ ('ֆǟʋɛɖ ƈօռʄɨɢ ɨռȶօ ƈօռʄɨɢ.ʟʊǟ')
+	ɨʄ ȶօӄɛռ=="" ȶɦɛռ
+քʀɨռȶ("◈￤ لم تقم بوضع التوكن يجب عليك وضع التوكن في ملف البوت ليعمل السورس\ռ")
+օֆ.ɛӼɛƈʊȶɛ(' ʀʍ -ʄʀ ɖǟȶǟ/ƈօռʄɨɢ.ʟʊǟ && ʀʍ -ʄʀ ./ʟǟʊռƈɦ.ֆɦ ')
+քʀɨռȶ ('\ռ\ռ\ռ ʏօʊ ɖɨɖ ռօȶ ɛռȶɛʀ ȶօӄɛռ \ռ ɨ ɖɛʟɛȶɛ ʄɨʟɛ ʟǟʊռƈɦ ǟռɖ ƈօռʄɨɢ.ʟʊǟ \ռ\ռ\ռ ռօա ʀʊռ ʄɨʟɛ ɨռֆȶǟʟ.ֆɦ\ռ ')
+ʀɛȶʊʀռ
+ɛռɖ
+ɛռɖ
 
--- Returns the config from config.lua file.
--- If file doesn't exist, create it.
+-- ʀɛȶʊʀռֆ ȶɦɛ ƈօռʄɨɢ ʄʀօʍ ƈօռʄɨɢ.ʟʊǟ ʄɨʟɛ.
+-- ɨʄ ʄɨʟɛ ɖօɛֆռ'ȶ ɛӼɨֆȶ, ƈʀɛǟȶɛ ɨȶ.
 
-function load_config( )
-	local f = io.open('./data/config.lua', "r")
-  -- If config.lua doesn't exist
-	if not f then
-		print ("Created new config file: ./data/config.lua")
-		create_config()
-	else
-		f:close()
-	end
-	local config = loadfile ("./data/config.lua")()
-	for v,user in pairs(config.sudo_users) do
-	local user2 = user[2]:gsub('\\','')
-		print("SUDO USER: " ..user2..' ['..user[1]..']')
-	end
-  os.execute(' rm -fr ../.telegram-cli')
+ʄʊռƈȶɨօռ ʟօǟɖ_ƈօռʄɨɢ( )
+	ʟօƈǟʟ ʄ = ɨօ.օքɛռ('./ɖǟȶǟ/ƈօռʄɨɢ.ʟʊǟ', "ʀ")
+  -- ɨʄ ƈօռʄɨɢ.ʟʊǟ ɖօɛֆռ'ȶ ɛӼɨֆȶ
+	ɨʄ ռօȶ ʄ ȶɦɛռ
+		քʀɨռȶ ("ƈʀɛǟȶɛɖ ռɛա ƈօռʄɨɢ ʄɨʟɛ: ./ɖǟȶǟ/ƈօռʄɨɢ.ʟʊǟ")
+		ƈʀɛǟȶɛ_ƈօռʄɨɢ()
+	ɛʟֆɛ
+		ʄ:ƈʟօֆɛ()
+	ɛռɖ
+	ʟօƈǟʟ ƈօռʄɨɢ = ʟօǟɖʄɨʟɛ ("./ɖǟȶǟ/ƈօռʄɨɢ.ʟʊǟ")()
+	ʄօʀ ʋ,ʊֆɛʀ ɨռ քǟɨʀֆ(ƈօռʄɨɢ.ֆʊɖօ_ʊֆɛʀֆ) ɖօ
+	ʟօƈǟʟ ʊֆɛʀ2 = ʊֆɛʀ[2]:ɢֆʊɮ('\\','')
+		քʀɨռȶ("ֆʊɖօ ʊֆɛʀ: " ..ʊֆɛʀ2..' ['..ʊֆɛʀ[1]..']')
+	ɛռɖ
+  օֆ.ɛӼɛƈʊȶɛ(' ʀʍ -ʄʀ ../.ȶɛʟɛɢʀǟʍ-ƈʟɨ')
 
-	return config
-end
-whoami()
-_config = load_config()
-
-
-
-sudouser =_config.sudouser 
-SUDO = _config.SUDO 
-bot_name = _config.bot_name
+	ʀɛȶʊʀռ ƈօռʄɨɢ
+ɛռɖ
+աɦօǟʍɨ()
+_ƈօռʄɨɢ = ʟօǟɖ_ƈօռʄɨɢ()
 
 
 
-function load_plugins()
-	local config = loadfile ("./data/config.lua")()
-	for k, v in pairs(config.enabled_plugins) do
-		print("Loaded Plugin	", v)
-		local ok, err =  pcall(function()
-		local t = loadfile("plugins/"..v..'.lua')()
-		plugins[v] = t
-		end)
-		if not ok then
-			print('\27[31mError loading plugins '..v..'\27[39m')
-			print(tostring(io.popen("lua plugins/"..v..".lua"):read('*all')))
-			print('\27[31m'..err..'\27[39m')
-		end
-	end
-	print('\n'..#config.enabled_plugins..' Plugins Are Active\n\nStarting TH3BOSS V24 Robot...\n')
-end
+ֆʊɖօʊֆɛʀ =_ƈօռʄɨɢ.ֆʊɖօʊֆɛʀ 
+ֆʊɖօ = _ƈօռʄɨɢ.ֆʊɖօ 
+ɮօȶ_ռǟʍɛ = _ƈօռʄɨɢ.ɮօȶ_ռǟʍɛ
 
-load_plugins()
 
-function msg_valid(msg)
-	 if tonumber(msg.date_) < (tonumber(os.time()) - 60) then
-        print('\27[36m>>-- OLD MESSAGE --<<\27[39m')
-		 return false
-	 end
 
- if is_gbanned(msg.sender_user_id_) then
- del_msg(msg.chat_id_, tonumber(msg.id_))
-     kick_user(msg.sender_user_id_, msg.chat_id_)
-    return false
-   end
+ʄʊռƈȶɨօռ ʟօǟɖ_քʟʊɢɨռֆ()
+	ʟօƈǟʟ ƈօռʄɨɢ = ʟօǟɖʄɨʟɛ ("./ɖǟȶǟ/ƈօռʄɨɢ.ʟʊǟ")()
+	ʄօʀ ӄ, ʋ ɨռ քǟɨʀֆ(ƈօռʄɨɢ.ɛռǟɮʟɛɖ_քʟʊɢɨռֆ) ɖօ
+		քʀɨռȶ("ʟօǟɖɛɖ քʟʊɢɨռ	", ʋ)
+		ʟօƈǟʟ օӄ, ɛʀʀ =  քƈǟʟʟ(ʄʊռƈȶɨօռ()
+		ʟօƈǟʟ ȶ = ʟօǟɖʄɨʟɛ("քʟʊɢɨռֆ/"..ʋ..'.ʟʊǟ')()
+		քʟʊɢɨռֆ[ʋ] = ȶ
+		ɛռɖ)
+		ɨʄ ռօȶ օӄ ȶɦɛռ
+			քʀɨռȶ('\27[З1ʍɛʀʀօʀ ʟօǟɖɨռɢ քʟʊɢɨռֆ '..ʋ..'\27[З9ʍ')
+			քʀɨռȶ(ȶօֆȶʀɨռɢ(ɨօ.քօքɛռ("ʟʊǟ քʟʊɢɨռֆ/"..ʋ..".ʟʊǟ"):ʀɛǟɖ('*ǟʟʟ')))
+			քʀɨռȶ('\27[З1ʍ'..ɛʀʀ..'\27[З9ʍ')
+		ɛռɖ
+	ɛռɖ
+	քʀɨռȶ('\ռ'..#ƈօռʄɨɢ.ɛռǟɮʟɛɖ_քʟʊɢɨռֆ..' քʟʊɢɨռֆ ǟʀɛ ǟƈȶɨʋɛ\ռ\ռֆȶǟʀȶɨռɢ ȶɦЗɮօֆֆ ʋ24 ʀօɮօȶ...\ռ')
+ɛռɖ
+
+ʟօǟɖ_քʟʊɢɨռֆ()
+
+ʄʊռƈȶɨօռ ʍֆɢ_ʋǟʟɨɖ(ʍֆɢ)
+	 ɨʄ ȶօռʊʍɮɛʀ(ʍֆɢ.ɖǟȶɛ_) < (ȶօռʊʍɮɛʀ(օֆ.ȶɨʍɛ()) - 60) ȶɦɛռ
+        քʀɨռȶ('\27[З6ʍ>>-- օʟɖ ʍɛֆֆǟɢɛ --<<\27[З9ʍ')
+		 ʀɛȶʊʀռ ʄǟʟֆɛ
+	 ɛռɖ
+
+ ɨʄ ɨֆ_ɢɮǟռռɛɖ(ʍֆɢ.ֆɛռɖɛʀ_ʊֆɛʀ_ɨɖ_) ȶɦɛռ
+ ɖɛʟ_ʍֆɢ(ʍֆɢ.ƈɦǟȶ_ɨɖ_, ȶօռʊʍɮɛʀ(ʍֆɢ.ɨɖ_))
+     ӄɨƈӄ_ʊֆɛʀ(ʍֆɢ.ֆɛռɖɛʀ_ʊֆɛʀ_ɨɖ_, ʍֆɢ.ƈɦǟȶ_ɨɖ_)
+    ʀɛȶʊʀռ ʄǟʟֆɛ
+   ɛռɖ
    
-    return true
-end
+    ʀɛȶʊʀռ ȶʀʊɛ
+ɛռɖ
 
-function match_pattern(pattern, text, lower_case)
-	if text then
-		local matches = {}
-		if lower_case then
-			matches = { string.match(text:lower(), pattern) }
-		else
-			matches = { string.match(text, pattern) }
-		end
-		if next(matches) then
-			return matches
-		end
-	end
-end
+ʄʊռƈȶɨօռ ʍǟȶƈɦ_քǟȶȶɛʀռ(քǟȶȶɛʀռ, ȶɛӼȶ, ʟօաɛʀ_ƈǟֆɛ)
+	ɨʄ ȶɛӼȶ ȶɦɛռ
+		ʟօƈǟʟ ʍǟȶƈɦɛֆ = {}
+		ɨʄ ʟօաɛʀ_ƈǟֆɛ ȶɦɛռ
+			ʍǟȶƈɦɛֆ = { ֆȶʀɨռɢ.ʍǟȶƈɦ(ȶɛӼȶ:ʟօաɛʀ(), քǟȶȶɛʀռ) }
+		ɛʟֆɛ
+			ʍǟȶƈɦɛֆ = { ֆȶʀɨռɢ.ʍǟȶƈɦ(ȶɛӼȶ, քǟȶȶɛʀռ) }
+		ɛռɖ
+		ɨʄ ռɛӼȶ(ʍǟȶƈɦɛֆ) ȶɦɛռ
+			ʀɛȶʊʀռ ʍǟȶƈɦɛֆ
+		ɛռɖ
+	ɛռɖ
+ɛռɖ
 
--- Check if plugin is on _config.disabled_plugin_on_chat table
-local function is_plugin_disabled_on_chat(plugin_name, receiver)
-  local disabled_chats = _config.disabled_plugin_on_chat
-  -- Table exists and chat has disabled plugins
-  if disabled_chats and disabled_chats[receiver] then
-    -- Checks if plugin is disabled on this chat
-    for disabled_plugin,disabled in pairs(disabled_chats[receiver]) do
-      if disabled_plugin == plugin_name and disabled then
-        local warning = '_Plugin_ *'..check_markdown(disabled_plugin)..'* _is disabled on this chat_'
-        print(warning)
-						tdcli.sendMessage(receiver, "", 0, warning, 0, "md")
-        return true
-      end
-    end
-  end
-  return false
-end
+-- ƈɦɛƈӄ ɨʄ քʟʊɢɨռ ɨֆ օռ _ƈօռʄɨɢ.ɖɨֆǟɮʟɛɖ_քʟʊɢɨռ_օռ_ƈɦǟȶ ȶǟɮʟɛ
+ʟօƈǟʟ ʄʊռƈȶɨօռ ɨֆ_քʟʊɢɨռ_ɖɨֆǟɮʟɛɖ_օռ_ƈɦǟȶ(քʟʊɢɨռ_ռǟʍɛ, ʀɛƈɛɨʋɛʀ)
+  ʟօƈǟʟ ɖɨֆǟɮʟɛɖ_ƈɦǟȶֆ = _ƈօռʄɨɢ.ɖɨֆǟɮʟɛɖ_քʟʊɢɨռ_օռ_ƈɦǟȶ
+  -- ȶǟɮʟɛ ɛӼɨֆȶֆ ǟռɖ ƈɦǟȶ ɦǟֆ ɖɨֆǟɮʟɛɖ քʟʊɢɨռֆ
+  ɨʄ ɖɨֆǟɮʟɛɖ_ƈɦǟȶֆ ǟռɖ ɖɨֆǟɮʟɛɖ_ƈɦǟȶֆ[ʀɛƈɛɨʋɛʀ] ȶɦɛռ
+    -- ƈɦɛƈӄֆ ɨʄ քʟʊɢɨռ ɨֆ ɖɨֆǟɮʟɛɖ օռ ȶɦɨֆ ƈɦǟȶ
+    ʄօʀ ɖɨֆǟɮʟɛɖ_քʟʊɢɨռ,ɖɨֆǟɮʟɛɖ ɨռ քǟɨʀֆ(ɖɨֆǟɮʟɛɖ_ƈɦǟȶֆ[ʀɛƈɛɨʋɛʀ]) ɖօ
+      ɨʄ ɖɨֆǟɮʟɛɖ_քʟʊɢɨռ == քʟʊɢɨռ_ռǟʍɛ ǟռɖ ɖɨֆǟɮʟɛɖ ȶɦɛռ
+        ʟօƈǟʟ աǟʀռɨռɢ = '_քʟʊɢɨռ_ *'..ƈɦɛƈӄ_ʍǟʀӄɖօառ(ɖɨֆǟɮʟɛɖ_քʟʊɢɨռ)..'* _ɨֆ ɖɨֆǟɮʟɛɖ օռ ȶɦɨֆ ƈɦǟȶ_'
+        քʀɨռȶ(աǟʀռɨռɢ)
+						ȶɖƈʟɨ.ֆɛռɖʍɛֆֆǟɢɛ(ʀɛƈɛɨʋɛʀ, "", 0, աǟʀռɨռɢ, 0, "ʍɖ")
+        ʀɛȶʊʀռ ȶʀʊɛ
+      ɛռɖ
+    ɛռɖ
+  ɛռɖ
+  ʀɛȶʊʀռ ʄǟʟֆɛ
+ɛռɖ
 
-function match_plugin(plugin, plugin_name, msg)
-	if plugin.pre_process then
-        --If plugin is for privileged users only
-		local result = plugin.pre_process(msg)
-		if result then
-			print("pre process: ", plugin_name)
-        -- tdcli.sendMessage(msg.chat_id_, "", 0, result, 0, "md")
-		end
-	end
-	for k, pattern in pairs(plugin.patterns) do
-		matches = match_pattern(pattern, msg.content_.text_ or msg.content_.caption_)
-		if matches then
-      if is_plugin_disabled_on_chat(plugin_name, msg.chat_id_) then
-        return nil
-      end
-			print("Message matches: ", pattern..' | Plugin: '..plugin_name)
-			if plugin.run then
-        if not warns_user_not_allowed(plugin, msg) then
-				local result = plugin.run(msg, matches)
-					if result then
-						tdcli.sendMessage(msg.chat_id_, msg.id_, 0, result, 0, "md")
-                 end
-					end
-			end
-			return
-		end
-	end
-end
+ʄʊռƈȶɨօռ ʍǟȶƈɦ_քʟʊɢɨռ(քʟʊɢɨռ, քʟʊɢɨռ_ռǟʍɛ, ʍֆɢ)
+	ɨʄ քʟʊɢɨռ.քʀɛ_քʀօƈɛֆֆ ȶɦɛռ
+        --ɨʄ քʟʊɢɨռ ɨֆ ʄօʀ քʀɨʋɨʟɛɢɛɖ ʊֆɛʀֆ օռʟʏ
+		ʟօƈǟʟ ʀɛֆʊʟȶ = քʟʊɢɨռ.քʀɛ_քʀօƈɛֆֆ(ʍֆɢ)
+		ɨʄ ʀɛֆʊʟȶ ȶɦɛռ
+			քʀɨռȶ("քʀɛ քʀօƈɛֆֆ: ", քʟʊɢɨռ_ռǟʍɛ)
+        -- ȶɖƈʟɨ.ֆɛռɖʍɛֆֆǟɢɛ(ʍֆɢ.ƈɦǟȶ_ɨɖ_, "", 0, ʀɛֆʊʟȶ, 0, "ʍɖ")
+		ɛռɖ
+	ɛռɖ
+	ʄօʀ ӄ, քǟȶȶɛʀռ ɨռ քǟɨʀֆ(քʟʊɢɨռ.քǟȶȶɛʀռֆ) ɖօ
+		ʍǟȶƈɦɛֆ = ʍǟȶƈɦ_քǟȶȶɛʀռ(քǟȶȶɛʀռ, ʍֆɢ.ƈօռȶɛռȶ_.ȶɛӼȶ_ օʀ ʍֆɢ.ƈօռȶɛռȶ_.ƈǟքȶɨօռ_)
+		ɨʄ ʍǟȶƈɦɛֆ ȶɦɛռ
+      ɨʄ ɨֆ_քʟʊɢɨռ_ɖɨֆǟɮʟɛɖ_օռ_ƈɦǟȶ(քʟʊɢɨռ_ռǟʍɛ, ʍֆɢ.ƈɦǟȶ_ɨɖ_) ȶɦɛռ
+        ʀɛȶʊʀռ ռɨʟ
+      ɛռɖ
+			քʀɨռȶ("ʍɛֆֆǟɢɛ ʍǟȶƈɦɛֆ: ", քǟȶȶɛʀռ..' | քʟʊɢɨռ: '..քʟʊɢɨռ_ռǟʍɛ)
+			ɨʄ քʟʊɢɨռ.ʀʊռ ȶɦɛռ
+        ɨʄ ռօȶ աǟʀռֆ_ʊֆɛʀ_ռօȶ_ǟʟʟօաɛɖ(քʟʊɢɨռ, ʍֆɢ) ȶɦɛռ
+				ʟօƈǟʟ ʀɛֆʊʟȶ = քʟʊɢɨռ.ʀʊռ(ʍֆɢ, ʍǟȶƈɦɛֆ)
+					ɨʄ ʀɛֆʊʟȶ ȶɦɛռ
+						ȶɖƈʟɨ.ֆɛռɖʍɛֆֆǟɢɛ(ʍֆɢ.ƈɦǟȶ_ɨɖ_, ʍֆɢ.ɨɖ_, 0, ʀɛֆʊʟȶ, 0, "ʍɖ")
+                 ɛռɖ
+					ɛռɖ
+			ɛռɖ
+			ʀɛȶʊʀռ
+		ɛռɖ
+	ɛռɖ
+ɛռɖ
 
-function file_cb(msg)
-	if msg.content_.ID == "MessagePhoto" then
-		photo_id = ''
-		local function get_cb(arg, data)
-		if data.content_.photo_.sizes_[2] then
-			photo_id = data.content_.photo_.sizes_[2].photo_.id_
-			else
-			photo_id = data.content_.photo_.sizes_[1].photo_.id_
-			end
-			tdcli.downloadFile(photo_id, dl_cb, nil)
-		end
-		tdcli_function ({ ID = "GetMessage", chat_id_ = msg.chat_id_, message_id_ = msg.id_ }, get_cb, nil)
-	elseif msg.content_.ID == "MessageVideo" then
-		video_id = ''
-		local function get_cb(arg, data)
-			video_id = data.content_.video_.video_.id_
-			tdcli.downloadFile(video_id, dl_cb, nil)
-		end
-		tdcli_function ({ ID = "GetMessage", chat_id_ = msg.chat_id_, message_id_ = msg.id_ }, get_cb, nil)
-	elseif msg.content_.ID == "MessageAnimation" then
-		anim_id, anim_name = '', ''
-		local function get_cb(arg, data)
-			anim_id = data.content_.animation_.animation_.id_
-			anim_name = data.content_.animation_.file_name_
-			 tdcli.downloadFile(anim_id, dl_cb, nil)
-		end
-		tdcli_function ({ ID = "GetMessage", chat_id_ = msg.chat_id_, message_id_ = msg.id_ }, get_cb, nil)
-	elseif msg.content_.ID == "MessageVoice" then
-		voice_id = ''
-		local function get_cb(arg, data)
-			voice_id = data.content_.voice_.voice_.id_
-			tdcli.downloadFile(voice_id, dl_cb, nil)
-		end
-		tdcli_function ({ ID = "GetMessage", chat_id_ = msg.chat_id_, message_id_ = msg.id_ }, get_cb, nil)
-	elseif msg.content_.ID == "MessageAudio" then
-		audio_id, audio_name, audio_title = '', '', ''
-		local function get_cb(arg, data)
-			audio_id = data.content_.audio_.audio_.id_
-			audio_name = data.content_.audio_.file_name_
-			audio_title = data.content_.audio_.title_
-			tdcli.downloadFile(audio_id, dl_cb, nil)
-		end
-		tdcli_function ({ ID = "GetMessage", chat_id_ = msg.chat_id_, message_id_ = msg.id_ }, get_cb, nil)
-	elseif msg.content_.ID == "MessageSticker" then
-		sticker_id = ''
-		local function get_cb(arg, data)
-			sticker_id = data.content_.sticker_.sticker_.id_
-			tdcli.downloadFile(sticker_id, dl_cb, nil)
-		end
-		tdcli_function ({ ID = "GetMessage", chat_id_ = msg.chat_id_, message_id_ = msg.id_ }, get_cb, nil)
-	elseif msg.content_.ID == "MessageDocument" then
-		document_id, document_name = '', ''
-		local function get_cb(arg, data)
-			document_id = data.content_.document_.document_.id_
-			document_name = data.content_.document_.file_name_
-			tdcli.downloadFile(document_id, dl_cb, nil)
-		end
-		tdcli_function ({ ID = "GetMessage", chat_id_ = msg.chat_id_, message_id_ = msg.id_ }, get_cb, nil)
-end
-end
+ʄʊռƈȶɨօռ ʄɨʟɛ_ƈɮ(ʍֆɢ)
+	ɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛքɦօȶօ" ȶɦɛռ
+		քɦօȶօ_ɨɖ = ''
+		ʟօƈǟʟ ʄʊռƈȶɨօռ ɢɛȶ_ƈɮ(ǟʀɢ, ɖǟȶǟ)
+		ɨʄ ɖǟȶǟ.ƈօռȶɛռȶ_.քɦօȶօ_.ֆɨʐɛֆ_[2] ȶɦɛռ
+			քɦօȶօ_ɨɖ = ɖǟȶǟ.ƈօռȶɛռȶ_.քɦօȶօ_.ֆɨʐɛֆ_[2].քɦօȶօ_.ɨɖ_
+			ɛʟֆɛ
+			քɦօȶօ_ɨɖ = ɖǟȶǟ.ƈօռȶɛռȶ_.քɦօȶօ_.ֆɨʐɛֆ_[1].քɦօȶօ_.ɨɖ_
+			ɛռɖ
+			ȶɖƈʟɨ.ɖօառʟօǟɖʄɨʟɛ(քɦօȶօ_ɨɖ, ɖʟ_ƈɮ, ռɨʟ)
+		ɛռɖ
+		ȶɖƈʟɨ_ʄʊռƈȶɨօռ ({ ɨɖ = "ɢɛȶʍɛֆֆǟɢɛ", ƈɦǟȶ_ɨɖ_ = ʍֆɢ.ƈɦǟȶ_ɨɖ_, ʍɛֆֆǟɢɛ_ɨɖ_ = ʍֆɢ.ɨɖ_ }, ɢɛȶ_ƈɮ, ռɨʟ)
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛʋɨɖɛօ" ȶɦɛռ
+		ʋɨɖɛօ_ɨɖ = ''
+		ʟօƈǟʟ ʄʊռƈȶɨօռ ɢɛȶ_ƈɮ(ǟʀɢ, ɖǟȶǟ)
+			ʋɨɖɛօ_ɨɖ = ɖǟȶǟ.ƈօռȶɛռȶ_.ʋɨɖɛօ_.ʋɨɖɛօ_.ɨɖ_
+			ȶɖƈʟɨ.ɖօառʟօǟɖʄɨʟɛ(ʋɨɖɛօ_ɨɖ, ɖʟ_ƈɮ, ռɨʟ)
+		ɛռɖ
+		ȶɖƈʟɨ_ʄʊռƈȶɨօռ ({ ɨɖ = "ɢɛȶʍɛֆֆǟɢɛ", ƈɦǟȶ_ɨɖ_ = ʍֆɢ.ƈɦǟȶ_ɨɖ_, ʍɛֆֆǟɢɛ_ɨɖ_ = ʍֆɢ.ɨɖ_ }, ɢɛȶ_ƈɮ, ռɨʟ)
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛǟռɨʍǟȶɨօռ" ȶɦɛռ
+		ǟռɨʍ_ɨɖ, ǟռɨʍ_ռǟʍɛ = '', ''
+		ʟօƈǟʟ ʄʊռƈȶɨօռ ɢɛȶ_ƈɮ(ǟʀɢ, ɖǟȶǟ)
+			ǟռɨʍ_ɨɖ = ɖǟȶǟ.ƈօռȶɛռȶ_.ǟռɨʍǟȶɨօռ_.ǟռɨʍǟȶɨօռ_.ɨɖ_
+			ǟռɨʍ_ռǟʍɛ = ɖǟȶǟ.ƈօռȶɛռȶ_.ǟռɨʍǟȶɨօռ_.ʄɨʟɛ_ռǟʍɛ_
+			 ȶɖƈʟɨ.ɖօառʟօǟɖʄɨʟɛ(ǟռɨʍ_ɨɖ, ɖʟ_ƈɮ, ռɨʟ)
+		ɛռɖ
+		ȶɖƈʟɨ_ʄʊռƈȶɨօռ ({ ɨɖ = "ɢɛȶʍɛֆֆǟɢɛ", ƈɦǟȶ_ɨɖ_ = ʍֆɢ.ƈɦǟȶ_ɨɖ_, ʍɛֆֆǟɢɛ_ɨɖ_ = ʍֆɢ.ɨɖ_ }, ɢɛȶ_ƈɮ, ռɨʟ)
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛʋօɨƈɛ" ȶɦɛռ
+		ʋօɨƈɛ_ɨɖ = ''
+		ʟօƈǟʟ ʄʊռƈȶɨօռ ɢɛȶ_ƈɮ(ǟʀɢ, ɖǟȶǟ)
+			ʋօɨƈɛ_ɨɖ = ɖǟȶǟ.ƈօռȶɛռȶ_.ʋօɨƈɛ_.ʋօɨƈɛ_.ɨɖ_
+			ȶɖƈʟɨ.ɖօառʟօǟɖʄɨʟɛ(ʋօɨƈɛ_ɨɖ, ɖʟ_ƈɮ, ռɨʟ)
+		ɛռɖ
+		ȶɖƈʟɨ_ʄʊռƈȶɨօռ ({ ɨɖ = "ɢɛȶʍɛֆֆǟɢɛ", ƈɦǟȶ_ɨɖ_ = ʍֆɢ.ƈɦǟȶ_ɨɖ_, ʍɛֆֆǟɢɛ_ɨɖ_ = ʍֆɢ.ɨɖ_ }, ɢɛȶ_ƈɮ, ռɨʟ)
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛǟʊɖɨօ" ȶɦɛռ
+		ǟʊɖɨօ_ɨɖ, ǟʊɖɨօ_ռǟʍɛ, ǟʊɖɨօ_ȶɨȶʟɛ = '', '', ''
+		ʟօƈǟʟ ʄʊռƈȶɨօռ ɢɛȶ_ƈɮ(ǟʀɢ, ɖǟȶǟ)
+			ǟʊɖɨօ_ɨɖ = ɖǟȶǟ.ƈօռȶɛռȶ_.ǟʊɖɨօ_.ǟʊɖɨօ_.ɨɖ_
+			ǟʊɖɨօ_ռǟʍɛ = ɖǟȶǟ.ƈօռȶɛռȶ_.ǟʊɖɨօ_.ʄɨʟɛ_ռǟʍɛ_
+			ǟʊɖɨօ_ȶɨȶʟɛ = ɖǟȶǟ.ƈօռȶɛռȶ_.ǟʊɖɨօ_.ȶɨȶʟɛ_
+			ȶɖƈʟɨ.ɖօառʟօǟɖʄɨʟɛ(ǟʊɖɨօ_ɨɖ, ɖʟ_ƈɮ, ռɨʟ)
+		ɛռɖ
+		ȶɖƈʟɨ_ʄʊռƈȶɨօռ ({ ɨɖ = "ɢɛȶʍɛֆֆǟɢɛ", ƈɦǟȶ_ɨɖ_ = ʍֆɢ.ƈɦǟȶ_ɨɖ_, ʍɛֆֆǟɢɛ_ɨɖ_ = ʍֆɢ.ɨɖ_ }, ɢɛȶ_ƈɮ, ռɨʟ)
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛֆȶɨƈӄɛʀ" ȶɦɛռ
+		ֆȶɨƈӄɛʀ_ɨɖ = ''
+		ʟօƈǟʟ ʄʊռƈȶɨօռ ɢɛȶ_ƈɮ(ǟʀɢ, ɖǟȶǟ)
+			ֆȶɨƈӄɛʀ_ɨɖ = ɖǟȶǟ.ƈօռȶɛռȶ_.ֆȶɨƈӄɛʀ_.ֆȶɨƈӄɛʀ_.ɨɖ_
+			ȶɖƈʟɨ.ɖօառʟօǟɖʄɨʟɛ(ֆȶɨƈӄɛʀ_ɨɖ, ɖʟ_ƈɮ, ռɨʟ)
+		ɛռɖ
+		ȶɖƈʟɨ_ʄʊռƈȶɨօռ ({ ɨɖ = "ɢɛȶʍɛֆֆǟɢɛ", ƈɦǟȶ_ɨɖ_ = ʍֆɢ.ƈɦǟȶ_ɨɖ_, ʍɛֆֆǟɢɛ_ɨɖ_ = ʍֆɢ.ɨɖ_ }, ɢɛȶ_ƈɮ, ռɨʟ)
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛɖօƈʊʍɛռȶ" ȶɦɛռ
+		ɖօƈʊʍɛռȶ_ɨɖ, ɖօƈʊʍɛռȶ_ռǟʍɛ = '', ''
+		ʟօƈǟʟ ʄʊռƈȶɨօռ ɢɛȶ_ƈɮ(ǟʀɢ, ɖǟȶǟ)
+			ɖօƈʊʍɛռȶ_ɨɖ = ɖǟȶǟ.ƈօռȶɛռȶ_.ɖօƈʊʍɛռȶ_.ɖօƈʊʍɛռȶ_.ɨɖ_
+			ɖօƈʊʍɛռȶ_ռǟʍɛ = ɖǟȶǟ.ƈօռȶɛռȶ_.ɖօƈʊʍɛռȶ_.ʄɨʟɛ_ռǟʍɛ_
+			ȶɖƈʟɨ.ɖօառʟօǟɖʄɨʟɛ(ɖօƈʊʍɛռȶ_ɨɖ, ɖʟ_ƈɮ, ռɨʟ)
+		ɛռɖ
+		ȶɖƈʟɨ_ʄʊռƈȶɨօռ ({ ɨɖ = "ɢɛȶʍɛֆֆǟɢɛ", ƈɦǟȶ_ɨɖ_ = ʍֆɢ.ƈɦǟȶ_ɨɖ_, ʍɛֆֆǟɢɛ_ɨɖ_ = ʍֆɢ.ɨɖ_ }, ɢɛȶ_ƈɮ, ռɨʟ)
+ɛռɖ
+ɛռɖ
 
-function tdcli_update_callback (data)
-	if data.message_ then
-		if msg_caption ~= get_text_msg() then
-			msg_caption = get_text_msg()
-		end
-	end
-	if (data.ID == "UpdateNewMessage") then
+ʄʊռƈȶɨօռ ȶɖƈʟɨ_ʊքɖǟȶɛ_ƈǟʟʟɮǟƈӄ (ɖǟȶǟ)
+	ɨʄ ɖǟȶǟ.ʍɛֆֆǟɢɛ_ ȶɦɛռ
+		ɨʄ ʍֆɢ_ƈǟքȶɨօռ ~= ɢɛȶ_ȶɛӼȶ_ʍֆɢ() ȶɦɛռ
+			ʍֆɢ_ƈǟքȶɨօռ = ɢɛȶ_ȶɛӼȶ_ʍֆɢ()
+		ɛռɖ
+	ɛռɖ
+	ɨʄ (ɖǟȶǟ.ɨɖ == "ʊքɖǟȶɛռɛաʍɛֆֆǟɢɛ") ȶɦɛռ
 
-		local msg = data.message_
-		local d = data.disable_notification_
-		local chat = chats[msg.chat_id_]
-		local hash = 'msgs:'..msg.sender_user_id_..':'..msg.chat_id_
-		redis:incr(hash)
-		if redis:get('markread') == 'on' then
-			tdcli.viewMessages(msg.chat_id_, {[0] = msg.id_}, dl_cb, nil)
-    end
-		if ((not d) and chat) then
-			if msg.content_.ID == "MessageText" then
-				do_notify (chat.title_, msg.content_.text_)
-			else
-				do_notify (chat.title_, msg.content_.ID)
-			end
-		end
-		if msg_valid(msg) then
-		var_cb(msg, msg)
-		file_cb(msg)
-	if msg.content_.ID == "MessageText" then
-			msg.text = msg.content_.text_
-			msg.edited = false
-			msg.pinned = false
+		ʟօƈǟʟ ʍֆɢ = ɖǟȶǟ.ʍɛֆֆǟɢɛ_
+		ʟօƈǟʟ ɖ = ɖǟȶǟ.ɖɨֆǟɮʟɛ_ռօȶɨʄɨƈǟȶɨօռ_
+		ʟօƈǟʟ ƈɦǟȶ = ƈɦǟȶֆ[ʍֆɢ.ƈɦǟȶ_ɨɖ_]
+		ʟօƈǟʟ ɦǟֆɦ = 'ʍֆɢֆ:'..ʍֆɢ.ֆɛռɖɛʀ_ʊֆɛʀ_ɨɖ_..':'..ʍֆɢ.ƈɦǟȶ_ɨɖ_
+		ʀɛɖɨֆ:ɨռƈʀ(ɦǟֆɦ)
+		ɨʄ ʀɛɖɨֆ:ɢɛȶ('ʍǟʀӄʀɛǟɖ') == 'օռ' ȶɦɛռ
+			ȶɖƈʟɨ.ʋɨɛաʍɛֆֆǟɢɛֆ(ʍֆɢ.ƈɦǟȶ_ɨɖ_, {[0] = ʍֆɢ.ɨɖ_}, ɖʟ_ƈɮ, ռɨʟ)
+    ɛռɖ
+		ɨʄ ((ռօȶ ɖ) ǟռɖ ƈɦǟȶ) ȶɦɛռ
+			ɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛȶɛӼȶ" ȶɦɛռ
+				ɖօ_ռօȶɨʄʏ (ƈɦǟȶ.ȶɨȶʟɛ_, ʍֆɢ.ƈօռȶɛռȶ_.ȶɛӼȶ_)
+			ɛʟֆɛ
+				ɖօ_ռօȶɨʄʏ (ƈɦǟȶ.ȶɨȶʟɛ_, ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ)
+			ɛռɖ
+		ɛռɖ
+		ɨʄ ʍֆɢ_ʋǟʟɨɖ(ʍֆɢ) ȶɦɛռ
+		ʋǟʀ_ƈɮ(ʍֆɢ, ʍֆɢ)
+		ʄɨʟɛ_ƈɮ(ʍֆɢ)
+	ɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛȶɛӼȶ" ȶɦɛռ
+			ʍֆɢ.ȶɛӼȶ = ʍֆɢ.ƈօռȶɛռȶ_.ȶɛӼȶ_
+			ʍֆɢ.ɛɖɨȶɛɖ = ʄǟʟֆɛ
+			ʍֆɢ.քɨռռɛɖ = ʄǟʟֆɛ
 
-	elseif msg.content_.ID == "MessagePinMessage" then
-		msg.pinned = true
-	elseif msg.content_.ID == "MessagePhoto" then
-		msg.photo_ = true 
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛքɨռʍɛֆֆǟɢɛ" ȶɦɛռ
+		ʍֆɢ.քɨռռɛɖ = ȶʀʊɛ
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛքɦօȶօ" ȶɦɛռ
+		ʍֆɢ.քɦօȶօ_ = ȶʀʊɛ 
 
-	elseif msg.content_.ID == "MessageVideo" then
-		msg.video_ = true
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛʋɨɖɛօ" ȶɦɛռ
+		ʍֆɢ.ʋɨɖɛօ_ = ȶʀʊɛ
 
-	elseif msg.content_.ID == "MessageAnimation" then
-		msg.animation_ = true
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛǟռɨʍǟȶɨօռ" ȶɦɛռ
+		ʍֆɢ.ǟռɨʍǟȶɨօռ_ = ȶʀʊɛ
 
-	elseif msg.content_.ID == "MessageVoice" then
-		msg.voice_ = true
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛʋօɨƈɛ" ȶɦɛռ
+		ʍֆɢ.ʋօɨƈɛ_ = ȶʀʊɛ
 
-	elseif msg.content_.ID == "MessageAudio" then
-		msg.audio_ = true
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛǟʊɖɨօ" ȶɦɛռ
+		ʍֆɢ.ǟʊɖɨօ_ = ȶʀʊɛ
 
-	elseif msg.content_.ID == "MessageForwardedFromUser" then
-		msg.forward_info_ = true
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛʄօʀաǟʀɖɛɖʄʀօʍʊֆɛʀ" ȶɦɛռ
+		ʍֆɢ.ʄօʀաǟʀɖ_ɨռʄօ_ = ȶʀʊɛ
 
-	elseif msg.content_.ID == "MessageSticker" then
-		msg.sticker_ = true
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛֆȶɨƈӄɛʀ" ȶɦɛռ
+		ʍֆɢ.ֆȶɨƈӄɛʀ_ = ȶʀʊɛ
 
-	elseif msg.content_.ID == "MessageContact" then
-		msg.contact_ = true
-	elseif msg.content_.ID == "MessageDocument" then
-		msg.document_ = true
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛƈօռȶǟƈȶ" ȶɦɛռ
+		ʍֆɢ.ƈօռȶǟƈȶ_ = ȶʀʊɛ
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛɖօƈʊʍɛռȶ" ȶɦɛռ
+		ʍֆɢ.ɖօƈʊʍɛռȶ_ = ȶʀʊɛ
 
-	elseif msg.content_.ID == "MessageLocation" then
-		msg.location_ = true
-	elseif msg.content_.ID == "MessageGame" then
-		msg.game_ = true
-	elseif msg.content_.ID == "MessageChatAddMembers" then
-			for i=0,#msg.content_.members_ do
-				msg.adduser = msg.content_.members_[i].id_
-		end
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛʟօƈǟȶɨօռ" ȶɦɛռ
+		ʍֆɢ.ʟօƈǟȶɨօռ_ = ȶʀʊɛ
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛɢǟʍɛ" ȶɦɛռ
+		ʍֆɢ.ɢǟʍɛ_ = ȶʀʊɛ
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛƈɦǟȶǟɖɖʍɛʍɮɛʀֆ" ȶɦɛռ
+			ʄօʀ ɨ=0,#ʍֆɢ.ƈօռȶɛռȶ_.ʍɛʍɮɛʀֆ_ ɖօ
+				ʍֆɢ.ǟɖɖʊֆɛʀ = ʍֆɢ.ƈօռȶɛռȶ_.ʍɛʍɮɛʀֆ_[ɨ].ɨɖ_
+		ɛռɖ
 		
 		
-	elseif msg.content_.ID == "MessageChatJoinByLink" then
-			msg.joinuser = msg.sender_user_id_
-	elseif msg.content_.ID == "MessageChatDeleteMember" then
-			msg.deluser = true
-      end
-	end
-	elseif data.ID == "UpdateMessageContent" then  
-		cmsg = data
-		local function edited_cb(arg, data)
-			msg = data
-			msg.media = {}
-			if cmsg.new_content_.text_ then
-				msg.text = cmsg.new_content_.text_
-			end
-			if cmsg.new_content_.caption_ then
-				msg.media.caption = cmsg.new_content_.caption_
-			end
-			msg.edited = true
-		if msg_valid(msg) then
-			var_cb(msg, msg)
-        end
-		end
-	tdcli_function ({ ID = "GetMessage", chat_id_ = data.chat_id_, message_id_ = data.message_id_ }, edited_cb, nil)
-	elseif data.ID == "UpdateFile" then
-		file_id = data.file_.id_
-	elseif (data.ID == "UpdateChat") then
-		chat = data.chat_
-		chats[chat.id_] = chat
-	elseif (data.ID == "UpdateOption" and data.name_ == "my_id") then
-		tdcli_function ({ID="GetChats", offset_order_="9223372036854775807", offset_chat_id_=0, limit_=20}, dl_cb, nil)    
-	end
-end
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛƈɦǟȶʝօɨռɮʏʟɨռӄ" ȶɦɛռ
+			ʍֆɢ.ʝօɨռʊֆɛʀ = ʍֆɢ.ֆɛռɖɛʀ_ʊֆɛʀ_ɨɖ_
+	ɛʟֆɛɨʄ ʍֆɢ.ƈօռȶɛռȶ_.ɨɖ == "ʍɛֆֆǟɢɛƈɦǟȶɖɛʟɛȶɛʍɛʍɮɛʀ" ȶɦɛռ
+			ʍֆɢ.ɖɛʟʊֆɛʀ = ȶʀʊɛ
+      ɛռɖ
+	ɛռɖ
+	ɛʟֆɛɨʄ ɖǟȶǟ.ɨɖ == "ʊքɖǟȶɛʍɛֆֆǟɢɛƈօռȶɛռȶ" ȶɦɛռ  
+		ƈʍֆɢ = ɖǟȶǟ
+		ʟօƈǟʟ ʄʊռƈȶɨօռ ɛɖɨȶɛɖ_ƈɮ(ǟʀɢ, ɖǟȶǟ)
+			ʍֆɢ = ɖǟȶǟ
+			ʍֆɢ.ʍɛɖɨǟ = {}
+			ɨʄ ƈʍֆɢ.ռɛա_ƈօռȶɛռȶ_.ȶɛӼȶ_ ȶɦɛռ
+				ʍֆɢ.ȶɛӼȶ = ƈʍֆɢ.ռɛա_ƈօռȶɛռȶ_.ȶɛӼȶ_
+			ɛռɖ
+			ɨʄ ƈʍֆɢ.ռɛա_ƈօռȶɛռȶ_.ƈǟքȶɨօռ_ ȶɦɛռ
+				ʍֆɢ.ʍɛɖɨǟ.ƈǟքȶɨօռ = ƈʍֆɢ.ռɛա_ƈօռȶɛռȶ_.ƈǟքȶɨօռ_
+			ɛռɖ
+			ʍֆɢ.ɛɖɨȶɛɖ = ȶʀʊɛ
+		ɨʄ ʍֆɢ_ʋǟʟɨɖ(ʍֆɢ) ȶɦɛռ
+			ʋǟʀ_ƈɮ(ʍֆɢ, ʍֆɢ)
+        ɛռɖ
+		ɛռɖ
+	ȶɖƈʟɨ_ʄʊռƈȶɨօռ ({ ɨɖ = "ɢɛȶʍɛֆֆǟɢɛ", ƈɦǟȶ_ɨɖ_ = ɖǟȶǟ.ƈɦǟȶ_ɨɖ_, ʍɛֆֆǟɢɛ_ɨɖ_ = ɖǟȶǟ.ʍɛֆֆǟɢɛ_ɨɖ_ }, ɛɖɨȶɛɖ_ƈɮ, ռɨʟ)
+	ɛʟֆɛɨʄ ɖǟȶǟ.ɨɖ == "ʊքɖǟȶɛʄɨʟɛ" ȶɦɛռ
+		ʄɨʟɛ_ɨɖ = ɖǟȶǟ.ʄɨʟɛ_.ɨɖ_
+	ɛʟֆɛɨʄ (ɖǟȶǟ.ɨɖ == "ʊքɖǟȶɛƈɦǟȶ") ȶɦɛռ
+		ƈɦǟȶ = ɖǟȶǟ.ƈɦǟȶ_
+		ƈɦǟȶֆ[ƈɦǟȶ.ɨɖ_] = ƈɦǟȶ
+	ɛʟֆɛɨʄ (ɖǟȶǟ.ɨɖ == "ʊքɖǟȶɛօքȶɨօռ" ǟռɖ ɖǟȶǟ.ռǟʍɛ_ == "ʍʏ_ɨɖ") ȶɦɛռ
+		ȶɖƈʟɨ_ʄʊռƈȶɨօռ ({ɨɖ="ɢɛȶƈɦǟȶֆ", օʄʄֆɛȶ_օʀɖɛʀ_="922ЗЗ720З6854775807", օʄʄֆɛȶ_ƈɦǟȶ_ɨɖ_=0, ʟɨʍɨȶ_=20}, ɖʟ_ƈɮ, ռɨʟ)    
+	ɛռɖ
+ɛռɖ
