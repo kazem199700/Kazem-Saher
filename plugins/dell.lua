@@ -14,13 +14,13 @@ local function run(msg, matches)
     if matches[1] == 'مسح' and is_owner(msg) then
         if tostring(msg.to.id):match("^-100") then 
             if tonumber(matches[2]) > 1000 or tonumber(matches[2]) < 1 then
-                return  '◈￤  يمكنك المسح من [ 1 الى 100 ] فقط '
+                return  '￤ ✔️ يہمہكہنہكہ ألمہسہحہ مہنہ [ 1 ألى 100 ] فہقہطہ '
             else
         tdcli.getChatHistory(msg.to.id, msg.id,0 , 100, delmsg, {msgs=matches[2]})
         return "◈￤  من الرسائل"..matches[2].."تم مسح "
             end
         else
-            return '◈￤  تستطيع المسح في المجمواعات السوبر فقط '
+            return '￤ ✔️ تہسہتہطہيہعہ ألمہسہحہ فہيہ ألمہجہمہوأعہأتہ ألسہوبہر فہقہطہ '
         end
     end
 end
