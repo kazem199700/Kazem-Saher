@@ -2,11 +2,11 @@ local function modadd(msg)
 
 -- superuser and admins only (because sudo are always has privilege)
 if not is_sudo(msg) then
-return '◈￤ _أنـت لـسـت الـمـطـور _ ⚙️'
+return 'أنہـتہ لـسہـتہ ألـمہـطہـور  👾🗯'
 end
 local data = load_data(_config.moderation.data)
 if data[tostring(msg.to.id)] then
-return '◈￤ المجموعه بالتأكيد ☑️ تم تفعيلها'
+return '>✔️ تہمہ تہفہعہيہل هذه ألمہجہمہوعہه✔️'
 
 end
 -- create data array in moderation.json
@@ -63,10 +63,10 @@ end
 data[tostring(groups)][tostring(msg.to.id)] = msg.to.id
 save_data(_config.moderation.data, data)
 if tonumber(msg.from.id) == tonumber(SUDO)  then
-return'◈￤تـم تـفـعـيـل الـمـجـمـوعـه ☑️'
+return'✔️ ☑️'
 else
 tdcli.sendMessage(SUDO, 0, 1, '◈￤ قام احد المطورين بتفعيل البوت \n◈￤ <code>'..msg.to.title..'️</code>\n◈￤ ايدي المجموعه : <code>'..msg.to.id..'</code>\n◈￤ بواسطة : '..msg.from.first_name..'\n◈￤ معرفه : @'..(msg.from.username or "---"), 1, 'html')
-return '◈￤تـم تـفـعـيـل الـمـجـمـوعـه ☑️'
+return 'تہمہ تہفہعہيہل هذه ألمہجہمہوعہه ☑️'
 
 end
 end
@@ -76,13 +76,13 @@ local function modrem(msg)
 -- superuser and admins only (because sudo are always has privilege)
 if not is_sudo(msg) then
 
-return '◈￤ _أنـت لـسـت الـمـطـور _ ⚙️'
+return ' _أنـت لـسـت الـمـطـور _ ⚙️'
 
 end
 local data = load_data(_config.moderation.data)
 local receiver = msg.to.id
 if not data[tostring(msg.to.id)] then
-return '◈￤ المجموعه بالتأكيد ☑️ تم تعطيلها'
+return ' المجموعه بالتأكيد ☑️ تم تعطيلها'
 end
 
 data[tostring(msg.to.id)] = nil
@@ -94,7 +94,7 @@ save_data(_config.moderation.data, data)
 end data[tostring(groups)][tostring(msg.to.id)] = nil
 save_data(_config.moderation.data, data)
 
-return '◈￤تـم تـعـطـيـل الـمـجـمـوعـه⚠️'
+return 'تـم تـعـطـيـل الـمـجـمـوعـه⚠️'
 
 end
 
@@ -107,13 +107,13 @@ save_data(_config.moderation.data, data)
 end
 if data[tostring(msg.to.id)]['filterlist'][(word)] then
 
-return  "◈￤ _ الكلمه_ *"..word.."* _هي بالتأكيد من قائمه المنع☑️_"
+return  " _ الكلمه_ *"..word.."* _هي بالتأكيد من قائمه المنع☑️_"
 
 end
 data[tostring(msg.to.id)]['filterlist'][(word)] = true
 save_data(_config.moderation.data, data)
 
-return  "◈￤ _ الكلمه_ *"..word.."* _تمت اضافتها الى قائمه المنع ☑️_"
+return  " _ الكلمه_ *"..word.."* _تمت اضافتها الى قائمه المنع ☑️_"
 
 end
 
